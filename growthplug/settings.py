@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'growthplug.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': get_secret('DB_NAME', None),
+        'NAME': get_secret('DB_NAME', 'd8r5f9chbi0eqa'),
         'USER': get_secret('DB_USER', None),
         'PASSWORD': get_secret('DB_PASS', None),
         'HOST': get_secret('DB_HOST', None),
@@ -101,7 +101,9 @@ DATABASES = {
     }
 }
 
+print("test", os.environ.get("DB_NAME"), get_secret('DB_NAME'))
 
+# postgres://yztastejjlbbwm:b2854e42f78952fc700fa6e3826ecb7451ea4330224b1a36126873576b83749e@ec2-54-85-80-92.compute-1.amazonaws.com:5432/d8r5f9chbi0eqa
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

@@ -1,2 +1,4 @@
 .idea
 local.py
+**/__pycache__
+
