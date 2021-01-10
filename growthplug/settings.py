@@ -11,9 +11,16 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+def get_secret(key, default_value=None):
+    """
+    modify if multiple env/secret.ini setups files used
+    """
+    return os.getenv(key, default_value)
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +32,7 @@ SECRET_KEY = 'i$=6!3a+vxp#flzp^%))y9(v8$by05ct0w5v9kag0f(-fh)ik0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +44,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'dj_rest_auth.registration',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -75,8 +92,12 @@ WSGI_APPLICATION = 'growthplug.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': get_secret('DB_NAME', None),
+        'USER': get_secret('DB_USER', None),
+        'PASSWORD': get_secret('DB_PASS', None),
+        'HOST': get_secret('DB_HOST', None),
+        'PORT': get_secret('DB_PORT', None),
     }
 }
 
@@ -113,8 +134,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+SITE_ID = 1
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+try:
+    from local import *
+except ImportError:
+    pass
