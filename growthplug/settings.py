@@ -142,6 +142,9 @@ USE_TZ = True
 SITE_ID = 1
 CORS_ALLOW_ALL_ORIGINS = True
 
+# aullauth
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
