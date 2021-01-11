@@ -104,9 +104,14 @@ DATABASES = {
     }
 }
 
-print("test", os.environ.get("DB_NAME"), get_secret('DB_NAME'))
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
 
-# postgres://yztastejjlbbwm:b2854e42f78952fc700fa6e3826ecb7451ea4330224b1a36126873576b83749e@ec2-54-85-80-92.compute-1.amazonaws.com:5432/d8r5f9chbi0eqa
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

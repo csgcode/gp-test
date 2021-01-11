@@ -39,7 +39,7 @@ class FacebookWrapper(object):
 
     def get_page_detail(self, page_id, page_token):
         # fields needed add as qparams
-        _url = f'{self.base_url}{page_id}?fields=about,attire,bio,emails,website&access_token={page_token}'
+        _url = f'{self.base_url}{page_id}?fields=about,attire,bio,emails,website,name&access_token={page_token}'
         res = requests.get(_url)
         return res.json()
 

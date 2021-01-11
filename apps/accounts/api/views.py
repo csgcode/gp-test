@@ -23,13 +23,13 @@ class PagesListView(APIView):
 
     def get(self, request):
         try:
-            fb = FacebookWrapper(request.user)
+            fb = FacebookWrapper(user=request.user)
             pages_list = fb.get_all_page_details()
-            print("all the pages details")
-        except:
+        except Exception as e:
             # TODO remove exception
+            print("exception", e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
+        # pages_list = [{"about":"this is api about222","bio":"this is api bio222","website":"http://www.website.com/","name":"Test page","id":"102461438483120"},{"about":"Food blog Insights ","name":"Food blog","id":"106891001362690"}]
         return Response(data=pages_list, status=status.HTTP_200_OK)
 
 
@@ -37,9 +37,10 @@ class PageUpdateView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        print("request.post", request.POST)
-        page_id = request.POST.get('id')
-        data = request.POST.get('data')
+        page_id = request.data.get('id')
+        data = request.data.get('data')
+        if not page_id:
+            return Response(status.HTTP_400_BAD_REQUEST)
         fb = FacebookWrapper(user=request.user)
         res = fb.update_page_details(page_id=page_id, data=data)
         updated_data = fb.get_all_page_details()
